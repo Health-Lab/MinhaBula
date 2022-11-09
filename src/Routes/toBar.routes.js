@@ -8,12 +8,12 @@ import Historico from '../pages/Historico'
 import {Ionicons} from '@expo/vector-icons'
 const Tab = createBottomTabNavigator();
 
-function Routes(){
+function ToBarRoute(){
 
     return(
         <Tab.Navigator
         screenOptions={{
-            tabBarActiveTintColor:'#9fe801',
+            tabBarActiveTintColor:'#38A69D',
             tabBarInactiveTintColor: '#FFF',
             tabBarStyle:{
                 position: 'absolute',
@@ -93,4 +93,4 @@ function Routes(){
     )
 }
 
-export default Routes;
+export default ToBarRoute;
