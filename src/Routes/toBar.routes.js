@@ -13,11 +13,11 @@ function ToBarRoute(){
     return(
         <Tab.Navigator
         screenOptions={{
-            tabBarActiveTintColor:'#38A69D',
+            tabBarActiveTintColor:'#38a69d',
             tabBarInactiveTintColor: '#FFF',
             tabBarStyle:{
                 position: 'absolute',
-                backgroundColor:'#040316',
+                backgroundColor:'#373737',
                 borderTopWidth: 0,
                 bottom: 14,
                 left:14,
@@ -30,7 +30,7 @@ function ToBarRoute(){
         }}
         >
             <Tab.Screen 
-            name='Home'
+            name='Inicio'
             component={Home}
             options={{
                 headerShown: false,

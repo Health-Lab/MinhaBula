@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { 
     View, 
     Text, 
@@ -11,8 +11,23 @@ import * as Animatable from 'react-native-animatable'
 
 import {useNavigation} from '@react-navigation/native'
 
+
 export default function SignIn(){
+
+    const [nome, setNome] = useState ('')
+    const [password, setPassword] = useState ('')
+
     const navigation = useNavigation();
+    
+    function handleLogin(){
+        const data ={
+            nome,
+            password
+        }
+        navigation.navigate('Home')
+        console.log(data)
+    }
+
     return(
         <View style={styles.container}>
             <Animatable.View animation={"fadeInLeft"} delay={500} style={styles.containerHeader}>
@@ -22,18 +37,24 @@ export default function SignIn(){
             <Animatable.View animation={"fadeInUp"} style={styles.containerFrom}>
                 <Text style={styles.title}>Email</Text>
                 <TextInput 
-                placeholder="Digite um email"
+                onChangeText={setNome}
+                value={nome}
+                placeholder="Digite seu email"
                 style={styles.input}
                 />
 
                 <Text style={styles.title}>Senha</Text>
                 <TextInput 
+                onChangeText={setPassword}
+                value={password}
                 placeholder="Digite sua senha"
                 style={styles.input}
+                secureTextEntry={true}
                 />
 
                 <TouchableOpacity 
-                 onPress={()=> navigation.navigate('Home')}
+                 onPress={()=> handleLogin()}
+                 
                 style={styles.button}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>

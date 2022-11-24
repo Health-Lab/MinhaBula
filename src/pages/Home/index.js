@@ -9,6 +9,7 @@ import {
  
 } from 'react-native';
 
+import SearchBar from '../../components/SearchBar';
 
 const statusBarHeight = StatusBar.currentHeight;
 
@@ -18,6 +19,7 @@ export default function Home() {
     
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <SearchBar/>
         <View style={styles.content}>
           <Text>Painina home</Text>
         </View>
