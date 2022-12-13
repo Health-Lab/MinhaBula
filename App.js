@@ -11,7 +11,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <StatusBar 
-      backgroundColor="#38A69D" 
+      backgroundColor='#2d857e'
       barStyle="light-content" 
       />
       <StackRoutes/>
