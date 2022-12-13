@@ -3,7 +3,7 @@ import{createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import Home from '../pages/Home'
 import Perfil from '../pages/Perfil'
 import Atendimento from '../pages/Atendimento'
-import Historico from '../pages/Historico'
+import Favoritos from '../pages/Favoritos'
 
 import {Ionicons} from '@expo/vector-icons'
 const Tab = createBottomTabNavigator();
@@ -13,19 +13,15 @@ function ToBarRoute(){
     return(
         <Tab.Navigator
         screenOptions={{
-            tabBarActiveTintColor:'#38a69d',
+            tabBarActiveTintColor:'#2d857e',
             tabBarInactiveTintColor: '#FFF',
+            
             tabBarStyle:{
-                position: 'absolute',
+                position: 'relative',
                 backgroundColor:'#373737',
                 borderTopWidth: 0,
-                bottom: 14,
-                left:14,
-                right: 14,
-                elevation: 0,
-                borderRadius: 4,
-                height: 60
-
+                borderRadius: 1,
+                height: 60,
             }
         }}
         >
@@ -44,21 +40,7 @@ function ToBarRoute(){
                 }
             }}
             />
-            <Tab.Screen 
-            name='Perfil'
-            component={Perfil}
-            options={{
-                headerShown: false,
-                tabBarIcon: ({color, size, focused})=>{
-                    if(focused){
-                        return <Ionicons name='person'
-                        size={size} color={color}/>
-                    }
-                    return <Ionicons name='person-outline'
-                    size={size} color={color}/>
-                }
-            }}
-            />
+            
             <Tab.Screen 
             name='Atendimento'
             component={Atendimento}
@@ -75,16 +57,31 @@ function ToBarRoute(){
             }}
             />
             <Tab.Screen 
-            name='Historico'
-            component={Historico}
+            name='Favorito'
+            component={Favoritos}
             options={{
                 headerShown: false,
                 tabBarIcon: ({color, size, focused})=>{
                     if(focused){
-                        return <Ionicons name='file-tray-full'
+                        return <Ionicons name='bookmarks'
                         size={size} color={color}/>
                     }
-                    return <Ionicons name='file-tray-full-outline'
+                    return <Ionicons name='bookmarks-outline'
+                    size={size} color={color}/>
+                }
+            }}
+            />
+            <Tab.Screen 
+            name='Perfil'
+            component={Perfil}
+            options={{
+                headerShown: false,
+                tabBarIcon: ({color, size, focused})=>{
+                    if(focused){
+                        return <Ionicons name='person'
+                        size={size} color={color}/>
+                    }
+                    return <Ionicons name='person-outline'
                     size={size} color={color}/>
                 }
             }}

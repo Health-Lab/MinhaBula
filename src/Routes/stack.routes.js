@@ -5,6 +5,7 @@ import SignIn from '../pages/SignIn'
 import Home from '../pages/Home'
 import CadastreSe from '../pages/CadastreSe'
 import ToBarRoute from "./toBar.routes";
+import Chat from "../pages/Chat";
 
 const Stack =  createNativeStackNavigator();
 
@@ -37,6 +38,13 @@ export default function RoutesStack(){
             <Stack.Screen
             name="CadastreSe"
             component={CadastreSe}
+            options={{
+                headerShown:false
+            }}
+            />
+            <Stack.Screen
+            name="Chat"
+            component={Chat}
             options={{
                 headerShown:false
             }}
