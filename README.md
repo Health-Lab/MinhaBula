@@ -47,12 +47,12 @@ Para configurar a conexão da sua máquina:
 
 # Endpoints da API
 * Rotas para o usuário
- `http://localhost/api/auth/singup` \n 
+ `http://localhost/api/auth/singup`  </br>
 	`http://localhost/api/auth/singup`
 	Metodo: POST
 
 
 * Rotas para medicamentos
-	`http://localhost/api/medicine/:nome-do-medicamento`\n 
+	`http://localhost/api/medicine/:nome-do-medicamento` </br> 
 	`http://localhost/api/auth/insert`
 	Metodo: GET
