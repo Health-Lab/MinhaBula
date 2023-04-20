@@ -21,7 +21,7 @@ $ yarn dev
 
 ### Rodando o FrontEnd
 
-Para rodar o FrontEnd será necessário o [Android-Studio] 
+Para rodar o FrontEnd será necessário o [Android-Studio](https://developer.android.com/studio) 
 
 ```bash
 # Para rodar o front end 
