@@ -7,25 +7,29 @@ import {
     TouchableOpacity, 
 } from "react-native";
 
-import * as Animatable from 'react-native-animatable'
+import * as Animatable from 'react-native-animatable';
 
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native';
+
+import authService from "../../services/authService";
 
 
 export default function SignIn(){
 
     const [nome, setNome] = useState ('')
     const [password, setPassword] = useState ('')
-
     const navigation = useNavigation();
+				const { login } = authService;
     
-    function handleLogin(){
-        const data ={
-            nome,
-            password
-        }
-        navigation.navigate('Home')
-        console.log(data)
+    async function handleLogin(){
+					const data ={
+						nome,
+						password
+					}
+					//navigation.navigate('Home')
+					const auth = await login(data);
+					setNome(auth.message);
+					console.log(auth);
     }
 
     return(
