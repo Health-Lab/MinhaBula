@@ -1,27 +1,43 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebaseConfig";
 
 const singUp = async(data) => {
-	let userUid;
-	createUserWithEmailAndPassword(auth, data.email, data.password)
-		.then(async (userCredential) => {
-			console.log(userCredential.user.uid);
-			userUid = userCredential.user.uid;
-			const docRef = doc(db, "users", userUid)
-			await setDoc(docRef, data);
-		})
-		.catch((error) => {
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			console.log(errorCode, errorMessage);
-		})
+	try {
+		const user = {
+			name: data.name,
+			email: data.email,
+			contact: data.contact,
+			birthdayDate: data.birthdayDate,
+			userType: data.userType
+		};
+		const res = await createUserWithEmailAndPassword(auth, data.email, data.password);
+		const userUid = res.user.uid;
+		const docRef = doc(db, "users", userUid);
+		const dbRes = await setDoc(docRef, user);
+		return userUid;
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		console.log(errorCode, errorMessage);
+	}
 };
 
-
+const singIn = async({email, password}) => {
+	try {
+		const res = await signInWithEmailAndPassword(auth, email, password);
+		const data = res.user.uid;
+		return data; 
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		console.log(errorCode, errorMessage);
+	}
+};
 
 const authService = {
-	singUp
+	singUp,
+	singIn,
 };
 
 export default authService;
