@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import { 
-    View, 
-    Text, 
-    StyleSheet, 
-    TextInput,
-    TouchableOpacity,
-    SafeAreaView,
-    ScrollView
-} from "react-native";
+import { useState } from "react";
+import { Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert } from "react-native";
 
 import{useForm, Controller} from 'react-hook-form';
 
@@ -17,103 +9,208 @@ import * as Animatable from 'react-native-animatable'
 import authService from "../../services/authService";
 
 export default function CadastreSe(){
+	const navigation = useNavigation();
+	const { singUp } = authService;
+	const { control, handleSubmit, formState: { errors } } = useForm({
+		defaultValues: {
+				name: '',
+				email: '',
+				contact: '',
+				birthdayDate: '',
+				password: '',
+				passwordConfirm: '',
+				userType: ''
+		}
+	});
 
-    const navigation = useNavigation();
+	const onSubmit = async(data) => {
+		console.log(data);
+	};
 
-    const [nome, setNome] = useState ('')
-    const [contato, setContato] = useState ('')
-    const [email, setEmail] = useState ('')
-    const [dataNacimento, setdataNacimento] = useState ('')
-    const [password, setPassword] = useState ('')
-    const [confirmaPassword, setConfirmaPassword] = useState ('')
-				const { singUp } = authService;
 
-    async function handleCadastro(){
-        const data = {
-            nome,
-            contato,
-            email,
-            dataNacimento,
-            password,
-            confirmaPassword
-        };
-								const res = await singUp(data);
-        console.log(data);
-    }
 
-    return(
-   
-        <SafeAreaView style={styles.container}>
-            <Animatable.View animation={"zoomIn"} delay={400} style={styles.containerHeader}>
-                <Text style={styles.message}>Vamos começar?</Text>
-                <Text style={styles.title}>Complete os dados e crie sua conta.</Text>
-            </Animatable.View>
-                
-                
+	async function handleCadastro(){
+		const data = { nome, contato, email, dataNacimento, password, confirmaPassword };
+		const res = await singUp(data);
+		console.log(data);
+	};
 
-                <Text style={styles.textInput}>Nome:</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setNome}
-                    value={nome}
-                    placeholder="Digite seu nome"
-                />
+return(
+	<SafeAreaView style={styles.container}>
+		<Animatable.View animation={"zoomIn"} delay={400} style={styles.containerHeader}>
+			<Text style={styles.message}>Vamos começar?</Text>
+			<Text style={styles.title}>Complete os dados e crie sua conta.</Text>
+		</Animatable.View>
 
-                <Text style={styles.textInput}>Contato:</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setContato}
-                    value={contato}
-                    placeholder="(99) 99999-9999"
-                    keyboardType="numeric"
-                />
+	<Controller
+		control={control}
+		rules={{
+			required: true
+		}}
+		render={({ field: {onChange, onBlur, value} }) => (
+			<>
+				<Text style={styles.textInput}>Nome:</Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={onChange}
+					value={value}
+					onBlur={onBlur}
+					placeholder="Digite seu nome"
+				/>
+			</>
+		)}
+		name="name"
+	/>
+	{errors.name && <Text>This is required.</Text>}
 
-                <Text style={styles.textInput}>Email:</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
-                    placeholder="minhabula@tes.com"
-                />
-                <Text style={styles.textInput}>Data de nacimento:</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setdataNacimento}
-                    value={dataNacimento}
-                    placeholder="00/00/0000"
-                    keyboardType="numeric"
-                />
+	<Controller 
+		control={control}
+		rules={{
+			required: true
+		}}
+		render={({ field: {onChange, onBlur, value} }) => (
+			<>
+				<Text style={styles.textInput}>Email:</Text>
+				<TextInput
+						style={styles.input}
+						onChangeText={onChange}
+						onBlur={onBlur}
+						value={value}
+						placeholder="minhabula@tes.com"
+				/>
+			</>
+		)}
+		name="email"
+	/>
 
-                <Text style={styles.textInput}>Senha:</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setPassword}
-                    value={password}
-                    placeholder="Digite sua senha"
-                    secureTextEntry={true}
-                />
-                <Text style={styles.textInput}>Confirme sua senha:</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setConfirmaPassword}
-                    value={confirmaPassword}
-                    placeholder="Digite novamente sua senha"
-                    secureTextEntry={true}
-                />
+	{errors.email && <Text>This is required.</Text>}
+		
+	<Controller 
+		control={control}
+		rules={{
+			required: true
+		}}
+		render={({ field: {onChange, onBlur, value} }) => (
+			<>
+				<Text style={styles.textInput}>Contato:</Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={onChange}
+					onBlur={onBlur}
+					value={value}
+					placeholder="(99) 99999-9999"
+					keyboardType="numeric"
+				/> 
+			</>
+		)}
+		name="contact"
+	/>
 
-                <TouchableOpacity 
-                    style={styles.buttonCadastrar}
-                    onPress={handleCadastro}>
-                    <Text style={styles.buttonText}>Finalizar cadastro</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                onPress={()=> navigation.navigate('SignIn')}
-                    style={styles.bunttonVoltarLongin}>
-                        <Text style={styles.loginVoltar}>Já possui uma conta? Fazer Login</Text>
-                    </TouchableOpacity>
-        </SafeAreaView>
-    
-    );
+	{errors.contact && <Text>This is required.</Text>}
+
+	<Controller 
+		control={control}
+		rules={{
+			required: true
+		}}
+		render={({ field: {onChange, onBlur, value} }) => (
+			<>
+				<Text style={styles.textInput}>Data de nacimento:</Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={onChange}
+					onBlur={onBlur}
+					value={value}
+					placeholder="00/00/0000"
+					keyboardType="numeric"
+				/>
+			</>
+		)}
+		name="birthdayDate"
+	/>
+
+	{errors.birthdayDate && <Text>This is required.</Text>}
+
+	<Controller 
+		control={control}
+		rules={{
+			required: true
+		}}
+		render={({ field: {onChange, onBlur, value} }) => (
+			<>
+				<Text style={styles.textInput}>Senha:</Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={onChange}
+					onBlur={onBlur}
+					value={value}
+					placeholder="Digite sua senha"
+					secureTextEntry
+				/>
+			</>
+		)}
+		name="password"
+	/>
+
+	{errors.password && <Text>This is required.</Text>}
+
+	<Controller 
+		control={control}
+		rules={{
+			required: true
+		}}
+		render={({ field: {onChange, onBlur, value} }) => (
+			<>
+				<Text style={styles.textInput}>Confirme sua senha:</Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={onChange}
+					onBlur={onBlur}
+					value={value}
+					placeholder="Digite novamente sua senha"
+					secureTextEntry
+				/>
+			</>
+		)}
+		name="passwordConfirm"
+	/>
+
+	{errors.passwordConfirm && <Text>This is required.</Text>}
+
+	<Controller 
+		control={control}
+		rules={{
+			required: true
+		}}
+		render={({ field: {onChange, onBlur, value} }) => (
+			<>
+				<Text style={styles.textInput}>Tipo de Usuário</Text>
+				<TextInput
+					style={styles.input}
+					onChangeText={onChange}
+					onBlur={onBlur}
+					value={value}
+				/>
+			</>
+		)}
+		name="userType"
+	/>
+
+	{errors.userType && <Text>This is required.</Text>}
+
+		<TouchableOpacity 
+		style={styles.buttonCadastrar}
+		onPress={handleSubmit(onSubmit)}>
+			<Text style={styles.buttonText}>Finalizar cadastro</Text>
+		</TouchableOpacity>
+
+		<TouchableOpacity 
+		onPress={()=> navigation.navigate('SignIn')}
+		style={styles.bunttonVoltarLongin}>
+			<Text style={styles.loginVoltar}>Já possui uma conta? Fazer Login</Text>
+		</TouchableOpacity>
+	</SafeAreaView>
+);
 
 }
 const styles = StyleSheet.create({
