@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert } from "react-native";
-
 import{useForm, Controller} from 'react-hook-form';
-
-import {useNavigation} from '@react-navigation/native'
-
-import * as Animatable from 'react-native-animatable'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import {useNavigation} from '@react-navigation/native';
+import * as Animatable from 'react-native-animatable';
 import authService from "../../services/authService";
+
+const singUpSchema = yup.object({
+	name: yup.string().required("Informe o nome"),
+	email: yup.string().required("Informe o e-mail").email("E-mail inválido"),
+	password: yup.string().required("Informe a senha").min(6, "A senha deve ter pelo menos 6 caracteres")
+})
 
 export default function CadastreSe(){
 	const navigation = useNavigation();
@@ -20,7 +25,8 @@ export default function CadastreSe(){
 				password: '',
 				passwordConfirm: '',
 				userType: ''
-		}
+		},
+		resolver: yupResolver(singUpSchema)
 	});
 
 	const onSubmit = async(data) => {
@@ -44,159 +50,125 @@ return(
 
 	<Controller
 		control={control}
-		rules={{
-			required: true
-		}}
-		render={({ field: {onChange, onBlur, value} }) => (
+		name="name"
+		render={({ field: {onChange, value} }) => (
 			<>
 				<Text style={styles.textInput}>Nome:</Text>
 				<TextInput
 					style={styles.input}
 					onChangeText={onChange}
 					value={value}
-					onBlur={onBlur}
 					placeholder="Digite seu nome"
+					errorMessage={errors.name?.message}
 				/>
 			</>
 		)}
-		name="name"
 	/>
-	{errors.name && <Text>This is required.</Text>}
 
 	<Controller 
 		control={control}
-		rules={{
-			required: true
-		}}
-		render={({ field: {onChange, onBlur, value} }) => (
+		name="email"
+		render={({ field: {onChange, value} }) => (
 			<>
 				<Text style={styles.textInput}>Email:</Text>
 				<TextInput
 						style={styles.input}
 						onChangeText={onChange}
-						onBlur={onBlur}
 						value={value}
 						placeholder="minhabula@tes.com"
+						errorMessage={errors.email?.message}
 				/>
 			</>
 		)}
-		name="email"
 	/>
-
-	{errors.email && <Text>This is required.</Text>}
 		
 	<Controller 
 		control={control}
-		rules={{
-			required: true
-		}}
-		render={({ field: {onChange, onBlur, value} }) => (
+		name="contact"
+		render={({ field: {onChange, value} }) => (
 			<>
 				<Text style={styles.textInput}>Contato:</Text>
 				<TextInput
 					style={styles.input}
 					onChangeText={onChange}
-					onBlur={onBlur}
 					value={value}
 					placeholder="(99) 99999-9999"
 					keyboardType="numeric"
+					errorMessage={errors.contact?.message}
 				/> 
 			</>
 		)}
-		name="contact"
 	/>
-
-	{errors.contact && <Text>This is required.</Text>}
 
 	<Controller 
 		control={control}
-		rules={{
-			required: true
-		}}
-		render={({ field: {onChange, onBlur, value} }) => (
+		name="birthdayDate"
+		render={({ field: {onChange, value} }) => (
 			<>
 				<Text style={styles.textInput}>Data de nacimento:</Text>
 				<TextInput
 					style={styles.input}
 					onChangeText={onChange}
-					onBlur={onBlur}
 					value={value}
 					placeholder="00/00/0000"
 					keyboardType="numeric"
+					errorMessage={errors.birthdayDate?.message}
 				/>
 			</>
 		)}
-		name="birthdayDate"
 	/>
-
-	{errors.birthdayDate && <Text>This is required.</Text>}
 
 	<Controller 
 		control={control}
-		rules={{
-			required: true
-		}}
-		render={({ field: {onChange, onBlur, value} }) => (
+		name="password"
+		render={({ field: {onChange, value} }) => (
 			<>
 				<Text style={styles.textInput}>Senha:</Text>
 				<TextInput
 					style={styles.input}
 					onChangeText={onChange}
-					onBlur={onBlur}
 					value={value}
 					placeholder="Digite sua senha"
 					secureTextEntry
+					errorMessage={errors.password?.message}
 				/>
 			</>
 		)}
-		name="password"
 	/>
-
-	{errors.password && <Text>This is required.</Text>}
 
 	<Controller 
 		control={control}
-		rules={{
-			required: true
-		}}
-		render={({ field: {onChange, onBlur, value} }) => (
+		name="passwordConfirm"
+		render={({ field: {onChange, value} }) => (
 			<>
 				<Text style={styles.textInput}>Confirme sua senha:</Text>
 				<TextInput
 					style={styles.input}
 					onChangeText={onChange}
-					onBlur={onBlur}
 					value={value}
 					placeholder="Digite novamente sua senha"
 					secureTextEntry
+					errorMessage={errors.passwordConfirm?.message}
 				/>
 			</>
 		)}
-		name="passwordConfirm"
 	/>
-
-	{errors.passwordConfirm && <Text>This is required.</Text>}
 
 	<Controller 
 		control={control}
-		rules={{
-			required: true
-		}}
-		render={({ field: {onChange, onBlur, value} }) => (
+		name="userType"
+		render={({ field: {onChange, value} }) => (
 			<>
 				<Text style={styles.textInput}>Tipo de Usuário</Text>
 				<TextInput
 					style={styles.input}
 					onChangeText={onChange}
-					onBlur={onBlur}
 					value={value}
+					errorMessage={errors.userType?.message}
 				/>
 			</>
 		)}
-		name="userType"
 	/>
-
-	{errors.userType && <Text>This is required.</Text>}
 
 		<TouchableOpacity 
 		style={styles.buttonCadastrar}
