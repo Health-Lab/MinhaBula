@@ -1,7 +1,7 @@
 import express from "express";
 
 //import of the controllers
-import { singUP, login } from "../controllers/userController";
+import { singUP, login, getUserById } from "../controllers/userController";
 
 //import middlewares
 import { userSingpUpValidation, userLoginValidation } from "../middlewares/userMiddleware";
@@ -11,5 +11,6 @@ const router = express.Router();
 
 router.post("/singup", userSingpUpValidation(), validate, singUP);
 router.post("/login", userLoginValidation(), validate, login);
+router.get("/:id", getUserById);
 
 export { router };

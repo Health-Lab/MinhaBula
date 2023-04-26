@@ -1,20 +1,27 @@
-const apiUrl = "https://6a16-168-196-17-123.ngrok-free.app";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../config/firebaseConfig";
 
-const login = async(user) => {
-	try {
-		console.log(apiUrl);
-		const res = await fetch(`${apiUrl}`);
-		
-		const data = await res.json();
-
-		return data;
-	} catch (error) {
-		console.log(error);
-	}
+const singUp = async(data) => {
+	let userUid;
+	createUserWithEmailAndPassword(auth, data.email, data.password)
+		.then(async (userCredential) => {
+			console.log(userCredential.user.uid);
+			userUid = userCredential.user.uid;
+			const docRef = doc(db, "users", userUid)
+			await setDoc(docRef, data);
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			console.log(errorCode, errorMessage);
+		})
 };
 
+
+
 const authService = {
-	login
+	singUp
 };
 
 export default authService;

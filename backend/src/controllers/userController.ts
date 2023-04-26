@@ -51,13 +51,15 @@ const login = async(req: Request, res: Response) => {
 
 		let user;
 
+		let userId;
+
 		await query.get().then(querySnapshot => {
 			querySnapshot.forEach(documentSnapshot => {
-				user = documentSnapshot.data()
+				userId = documentSnapshot.ref.path.replace('users/', "")
+				user = documentSnapshot.data();
 			});
-		})
+	});
 
-		console.log(user);
 
 		if(!(bcrypt.compareSync(password, user.password))){
 			res.status(404).json({
@@ -67,7 +69,7 @@ const login = async(req: Request, res: Response) => {
 		};
 
 		res.status(200).json({
-			message: "Usuário autenticado com sucesso!"
+			id: userId
 		});
 		return;
 	} catch (error) {
@@ -78,8 +80,29 @@ const login = async(req: Request, res: Response) => {
 	}
 };
 
+const getUserById = async(req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		let user;
+		const query = await db.collection("users").doc(id).get().then(queryData => {
+			user = queryData.data();
+		});
+		delete user.password;
+
+		res.status(200).json(user);
+		return;
+	} catch (error) {
+		res.status(422).json({
+			errors: "Ocorreu um erro, por favor tente novamente mais tarde!"
+		});
+		return;
+	}
+};
+
+
 
 export {
 	singUP,
 	login,
+	getUserById,
 };

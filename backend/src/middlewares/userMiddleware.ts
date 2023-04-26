@@ -4,33 +4,33 @@ const userSingpUpValidation = () => {
 	return [
 		body("nome")
 			.isString()
-			.withMessage("Name is neccessary")
+			.withMessage("Insira um valor para o nome")
 			.isLength({ min: 3 })
-			.withMessage("Name need at least 3 characters"),
+			.withMessage("O nome necessita de pelo menos 3 caracteres"),
 		body("email")
 			.isString()
-			.withMessage("E-mail is neccessary")
+			.withMessage("Insira um valor para o e-mail")
 			.isEmail()
-			.withMessage("Inform an valid e-mail"),
+			.withMessage("Insira um e-mail válido"),
 		body("password")
 			.isString()
-			.withMessage("Password is neccessary")
+			.withMessage("Insira um valor para a senha")
 			.isLength({ min: 5 })
-			.withMessage("Password need at least 5 characters"),
+			.withMessage("A senha necessita de pelo menos 5 caracteres"),
 		body("confirmPassword")
 			.isString()
 			.notEmpty()
-			.withMessage("Confirm password is neccessary")
+			.withMessage("A confirmação de senha é necessária.")
 			.custom((value, {req}) =>{
 				if(value !== req.body.password){
-					throw new Error("The password confirmation does not match")
+					throw new Error("As senhas informadas não coincidem")
 				};
 				return true;
 			}),
 			body("userType")
 			.isNumeric()
 			.notEmpty()
-			.withMessage("Select one user type")
+			.withMessage("Selecione um tipo de usuário")
 	];
 };
 
@@ -39,13 +39,13 @@ const userLoginValidation = () => {
 		body("email")
 			.isString()
 			.notEmpty()
-			.withMessage("E-mail is neccessary")
+			.withMessage("Insira um valor para o e-mail")
 			.isEmail()
-			.withMessage("Inform an valid e-mail"),
+			.withMessage("Insira um e-mail válido"),
 		body("password")
 		.isString()
 		.notEmpty()
-		.withMessage("Password is neccessary")
+		.withMessage("Insira um valor para a senha")
 	]
 };
 

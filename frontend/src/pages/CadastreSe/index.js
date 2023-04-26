@@ -9,11 +9,12 @@ import {
     ScrollView
 } from "react-native";
 
-import{useForm, Controller} from 'react-hook-form'
+import{useForm, Controller} from 'react-hook-form';
 
 import {useNavigation} from '@react-navigation/native'
 
 import * as Animatable from 'react-native-animatable'
+import authService from "../../services/authService";
 
 export default function CadastreSe(){
 
@@ -25,8 +26,9 @@ export default function CadastreSe(){
     const [dataNacimento, setdataNacimento] = useState ('')
     const [password, setPassword] = useState ('')
     const [confirmaPassword, setConfirmaPassword] = useState ('')
+				const { singUp } = authService;
 
-    function handleCadastro(){
+    async function handleCadastro(){
         const data = {
             nome,
             contato,
@@ -34,9 +36,9 @@ export default function CadastreSe(){
             dataNacimento,
             password,
             confirmaPassword
-        }
-
-        console.log(data)
+        };
+								const res = await singUp(data);
+        console.log(data);
     }
 
     return(
