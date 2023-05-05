@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase-admin/firestore'; 
+
 
 export interface MedicineModel {
 	nome: string;
@@ -14,10 +14,6 @@ export interface MedicineModel {
 		empresa: string;
 		endereço: string;
 		cnpj: string;
-		contato: {
-			sac: string;
-			site: string;
-		}
+		sac: string;
 	}
-	createdAt: Timestamp;
 };

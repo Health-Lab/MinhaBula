@@ -1,17 +1,38 @@
-import React from "react";
-import { TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
+import { useEffect, useState } from "react";
+import { TextInput, View, StyleSheet, TouchableOpacity, ScrollView, Text, Pressable } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import userService from "../../services/userService";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
+	const [inputSearch, setInputSearch] = useState("");
+	const [medicines, setMedicines] = useState();
+	const { getMedicinesNames } = userService;
+	const navigation = useNavigation();
 
   function handleSearchMovie (){
-
-    if (input ==='')return;
-    
-    navigation.navigate('Search', {name: input})
-    setInput('');
-   
+    if(inputSearch == ""){
+					return;
+				}
+    setInputSearch('');
+    navigation.navigate('Remedio', {nome: inputSearch});
   }
+
+	function handleInputChange(value){
+		setInputSearch(value)
+	}
+
+	function handlePress(data){
+		setInputSearch(data)
+	}
+
+	useEffect(() => {
+		async function fetchData(){
+			const res = await getMedicinesNames();
+			setMedicines(res);
+		}
+		fetchData();
+	}, [])
 
   return (
     <View style={style.container}>
@@ -20,14 +41,29 @@ const Home = () => {
         <TextInput style={style.Input}
           placeholder="Pesquisar"
           placeholderTextColor="#FFFF"
-          
+										onChangeText={handleInputChange}
+          value={inputSearch}
         />
         <TouchableOpacity style={style.SearchButton} onPress={handleSearchMovie}>
           <Feather name="search" size={30} color="#373737" />
         </TouchableOpacity>
       </View>
-
-
+						{inputSearch && (
+				 	<ScrollView>
+				 	{medicines.filter(item => {
+				 		const searchTerm = inputSearch.toLowerCase();
+				 		const countryName = item.toLowerCase();
+				 		return searchTerm && countryName.startsWith(searchTerm);
+				 	})
+				 	.map(medicine => {
+				 		return (
+				 				<Pressable key={medicine} onPress={() => handlePress(medicine)}>
+				 					<Text> {medicine} </Text>
+				 				</Pressable>
+				 		)
+				 	})}
+				 </ScrollView>
+					)}
     </View>
   )
 }
@@ -51,7 +87,7 @@ const style = StyleSheet.create({
     borderRadius:10,
     padding: 15,
     fontSize: 18,
-    color: '#121212'
+    color: '#fff'
   },
   SearchButton: {
     width: '15%',

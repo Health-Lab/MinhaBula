@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, View, ScrollView } from "react-native";
-import{useForm, Controller, set} from 'react-hook-form';
+import{useForm, Controller} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {useNavigation} from '@react-navigation/native';

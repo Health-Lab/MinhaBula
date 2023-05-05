@@ -6,6 +6,7 @@ import Home from '../pages/Home'
 import CadastreSe from '../pages/CadastreSe'
 import ToBarRoute from "./toBar.routes";
 import Chat from "../pages/Chat";
+import Remedio from "../pages/medicina";
 
 const Stack =  createNativeStackNavigator();
 
@@ -45,6 +46,13 @@ export default function RoutesStack(){
             <Stack.Screen
             name="Chat"
             component={Chat}
+            options={{
+                headerShown:false
+            }}
+            />
+            <Stack.Screen
+            name="Remedio"
+            component={Remedio}
             options={{
                 headerShown:false
             }}

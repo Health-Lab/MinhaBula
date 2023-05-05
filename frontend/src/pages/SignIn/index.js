@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#FFF",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "bold", 
   },
   buttonRegister: {
     marginTop: 14,

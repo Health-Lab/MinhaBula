@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "../config/db";
-import bulas from "../../bulas.json";
+import bulas from "../../bulas100.json";
 import { MedicineModel } from "../models/medicineModel";
 import { Timestamp } from 'firebase-admin/firestore'; 
 
@@ -50,7 +50,6 @@ const findMedicine = (query, medicineArray) => {
 const insert = async(req: Request, res: Response) => {
 try {
 	bulas.forEach(async bula => {
-		bula.createdAt = Timestamp.now()
 		await db.collection("medicines").add(bula)
 	});
 	res.status(201).json({
