@@ -12,9 +12,16 @@ export default function Welcome(){
 	useEffect(() => {
 		auth.onAuthStateChanged(_user => {
 			setUser(_user);
-			console.log(user);
 		});
 	}, []);
+
+	function handlePress(){
+		if(user){
+			navigation.navigate('Home')
+		} else{
+			navigation.navigate('SignIn')
+		}
+	}
 
 	return(
 		<View style={styles.container}>
@@ -34,7 +41,7 @@ export default function Welcome(){
 				<Text style={styles.title}>Minha Bula oferecem a possibilidade de pesquisa rápida pelo nome do medicamentos!</Text>
 				<Text style={styles.text}>Faça o login para começar</Text>
 				<TouchableOpacity 
-					onPress={()=> navigation.navigate('SignIn')}
+					onPress={handlePress}
 					style={styles.button}
 				>
 				<Text style={styles.buttonText}>Acessar</Text>

@@ -1,11 +1,16 @@
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text, View, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import userService from "../../services/userService";
+import { MedicinesScreen } from "../../components/MedicineScreen/MedicinesScreen";
+import styles from "./styles";
+import { AntDesign, Feather } from '@expo/vector-icons';
+import * as Speech from "expo-speech";
 
 export default function Remedio({route}){
 	const [medicine, setMedicine] = useState();
+	const [favorite, setFavorite] = useState(false);
 	const { getMedicineByName } = userService;
-	const { nome } = route.params
+	const { nome } = route.params;
 
 	useEffect(() => {
 		async function fecthData(){
@@ -13,55 +18,58 @@ export default function Remedio({route}){
 			setMedicine(res)
 		};
 		fecthData();
+		listAllVoices()
 	}, [])
 
+	const listAllVoices = async() => {
+		let voices = await Speech.getAvailableVoicesAsync(); 
+		console.log(voices);
+	}
+
+	const handleFavorite = () => {
+		favorite == true ? setFavorite(false) : setFavorite(true)
+	}
+
+	const handleTTS = () => {
+		const tts = "testando o text to speech utilizando react native e expo";
+		Speech.speak(tts, {
+			language: "pt-BR"
+		});
+		console.log("teste");
+	}
+
 	return(
-		<SafeAreaView>
-			<ScrollView>
-				{medicine && (
+		<SafeAreaView style={styles.container}>
+			{medicine && (
 				<>
-					<Text>
-						Nome: {medicine[0].nome}
-					</Text>
-					<Text>
-						Principio Ativo: {medicine[0].principioAtivo}
-					</Text>
-					<Text>
-						Dosagem: {medicine[0].dosagem}
-					</Text>
-					<Text>
-						Composição: {medicine[0].composicao}
-					</Text>
-					<Text>
-						Contra Indicação: {medicine[0].contraIndicacao}
-					</Text>
-					<Text>
-						Funcionamento: {medicine[0].funcionamento}
-					</Text>
-					<Text>
-						Overdose: {medicine[0].overdose}
-					</Text>
-					<Text>
-						Precauções: {medicine[0].precaucoes}
-					</Text>
-					<Text>
-						Reações: {medicine[0].reacoes}
-					</Text>
-					<Text>
-						Laboratório: {medicine[0].laboratorio.empresa}
-					</Text>
-					<Text>
-						CNPJ: {medicine[0].laboratorio.cnpj}
-					</Text>
-					<Text>
-						Enderço: {medicine[0].laboratorio.endereço || medicine[0].laboratorio.endereco}
-					</Text>
-					<Text>
-						SAC: {medicine[0].laboratorio.sac}
-					</Text>
+					<Text style={styles.medicineName}>
+							{medicine.nome}
+						</Text>
+					<View style={styles.headerContainer}>
+						<Pressable onPress={handleFavorite}>
+							{favorite == true ? (
+								<AntDesign name="heart" size={28} color="#fc0000" />
+							): (
+								<AntDesign name="hearto" size={28} color="#fc0000" />
+							)}
+						</Pressable>
+						<Pressable>
+							<Feather name="volume-2" size={28} color="black" onPress={handleTTS} />
+						</Pressable>
+					</View>
+					<ScrollView showsVerticalScrollIndicator={false}>
+						<MedicinesScreen title="Princípio Ativo" value={[medicine.principioAtivo]}/>
+						<MedicinesScreen title="Dosagem" value={[medicine.dosagem]}/>
+						<MedicinesScreen title="Funcionamento" value={[medicine.funcionamento]}/>
+						<MedicinesScreen title="Composição" value={[medicine.composicao]}/>
+						<MedicinesScreen title="Contra Indicações" value={[medicine.contraIndicacao]}/>
+						<MedicinesScreen title="Precauções" value={[medicine.precaucoes]}/>
+						<MedicinesScreen title="Reações" value={[medicine.reacoes]}/>
+						<MedicinesScreen title="Overdose" value={[medicine.overdose]}/>
+						<MedicinesScreen title="Laboratório" value={[medicine.laboratorio.empresa, medicine.laboratorio.cnpj, (medicine.laboratorio.endereco || medicine.laboratorio.endereço), medicine.laboratorio.sac]}/>
+					</ScrollView>
 				</>
-				)}
-			</ScrollView>
+			)}
 		</SafeAreaView>
 	)
 };

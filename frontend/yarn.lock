@@ -4852,6 +4852,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-speech@npm:~10.3.0":
+  version: 10.3.0
+  resolution: "expo-speech@npm:10.3.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 613f449dbcbe69555fc7c5265433ca4d25d8bbb1982d45ef7786dd90a548bacec6efb5a2fcdc5eb7218174197146b2a720ca8f5ae128d5c020bb2844aaecd9b1
+  languageName: node
+  linkType: hard
+
 "expo-status-bar@npm:~1.4.0":
   version: 1.4.0
   resolution: "expo-status-bar@npm:1.4.0"
@@ -7142,6 +7151,7 @@ __metadata:
     "@react-navigation/native": ^6.0.13
     "@react-navigation/native-stack": ^6.9.1
     expo: ~46.0.16
+    expo-speech: ~10.3.0
     expo-status-bar: ~1.4.0
     firebase: ^9.20.0
     react: 18.0.0

@@ -3,13 +3,13 @@ import { db } from "../config/firebaseConfig";
 
 const getMedicineByName = async({name}) => {
 	try {
-		let responses = []
+		let response;
 		const res = await query(collection(db, "medicines"), where("nome", "==", name.toUpperCase()));
 		const data = await getDocs(res)
 		data.forEach((doc) => {
-			responses.push(doc.data())
+			response = doc.data()
 		})
-		return responses
+		return response
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
