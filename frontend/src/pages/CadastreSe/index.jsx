@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, View, ScrollView } from "react-native";
+import { Text, TextInput, TouchableOpacity, SafeAreaView, View, ScrollView } from "react-native";
 import{useForm, Controller} from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
-import {Picker} from '@react-native-picker/picker'; //remove
 import { SelectList } from "react-native-dropdown-select-list";
-import { Masks } from 'react-native-mask-input';//remover
 import authService from "../../services/authService";
+import styles from "./styles";
 
 const singUpSchema = yup.object({
 	name: yup.string().required("Informe o nome"),
@@ -188,75 +187,4 @@ return(
 		</ScrollView>
 	</SafeAreaView>
 );
-
 }
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'#FFFAFA',
-        padding: 12
-    },
-    title:{
-        fontSize: 12,
-        marginBottom: 5,
-        color:'#121212',
-        fontWeight:'bold',
-    },
-    textInput:{
-        fontSize: 13,
-        marginEnd: 5,
-        color:'#121212',
-        alignSelf: 'flex-start',
-        marginStart: 5,
-        marginTop: 10 
-        
-    },
-    input:{
-        width: '100%',
-        height: 35,
-        backgroundColor:'#DDD',
-        borderRadius: 5,
-        fontSize: 15,
-        padding: 5,
-        margin: 6
-    },
-    buttonCadastrar:{
-        backgroundColor: '#38a69d',
-        width:'100%',
-        borderRadius: 4,
-        paddingVertical: 8,
-        marginTop: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-        
-    },
-    buttonText:{
-        color:'#FFF',
-        fontSize:18,
-        fontWeight: 'bold',
-    },
-    bunttonVoltarLongin:{
-        marginTop: 14,
-        alignSelf: 'center'
-    },
-    loginVoltar:{
-        color: '#a1a1a1'
-    },
-    containerHeader:{
-       flex:1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    message:{
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#000',
-        marginBottom: 10
-    },
-				userList: {
-					width: '100%',
-				},
-				scroll: {
-					flex: 1
-				}
-})

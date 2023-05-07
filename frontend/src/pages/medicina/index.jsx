@@ -9,7 +9,7 @@ import * as Speech from "expo-speech";
 export default function Remedio({route}){
 	const [medicine, setMedicine] = useState();
 	const [favorite, setFavorite] = useState(false);
-	const { getMedicineByName } = userService;
+	const { getMedicineByName, includeFavoriteMedicine } = userService;
 	const { nome } = route.params;
 
 	useEffect(() => {
@@ -23,7 +23,6 @@ export default function Remedio({route}){
 
 	const listAllVoices = async() => {
 		let voices = await Speech.getAvailableVoicesAsync(); 
-		console.log(voices);
 	}
 
 	const handleFavorite = () => {
@@ -31,11 +30,10 @@ export default function Remedio({route}){
 	}
 
 	const handleTTS = () => {
-		const tts = "testando o text to speech utilizando react native e expo";
+		const tts = "try hard";
 		Speech.speak(tts, {
 			language: "pt-BR"
 		});
-		console.log("teste");
 	}
 
 	return(
@@ -43,7 +41,7 @@ export default function Remedio({route}){
 			{medicine && (
 				<>
 					<Text style={styles.medicineName}>
-							{medicine.nome}
+							{medicine.data.nome}
 						</Text>
 					<View style={styles.headerContainer}>
 						<Pressable onPress={handleFavorite}>
@@ -58,15 +56,15 @@ export default function Remedio({route}){
 						</Pressable>
 					</View>
 					<ScrollView showsVerticalScrollIndicator={false}>
-						<MedicinesScreen title="Princípio Ativo" value={[medicine.principioAtivo]}/>
-						<MedicinesScreen title="Dosagem" value={[medicine.dosagem]}/>
-						<MedicinesScreen title="Funcionamento" value={[medicine.funcionamento]}/>
-						<MedicinesScreen title="Composição" value={[medicine.composicao]}/>
-						<MedicinesScreen title="Contra Indicações" value={[medicine.contraIndicacao]}/>
-						<MedicinesScreen title="Precauções" value={[medicine.precaucoes]}/>
-						<MedicinesScreen title="Reações" value={[medicine.reacoes]}/>
-						<MedicinesScreen title="Overdose" value={[medicine.overdose]}/>
-						<MedicinesScreen title="Laboratório" value={[medicine.laboratorio.empresa, medicine.laboratorio.cnpj, (medicine.laboratorio.endereco || medicine.laboratorio.endereço), medicine.laboratorio.sac]}/>
+						<MedicinesScreen title="Princípio Ativo" value={[medicine.data.principioAtivo]}/>
+						<MedicinesScreen title="Dosagem" value={[medicine.data.dosagem]}/>
+						<MedicinesScreen title="Funcionamento" value={[medicine.data.funcionamento]}/>
+						<MedicinesScreen title="Composição" value={[medicine.data.composicao]}/>
+						<MedicinesScreen title="Contra Indicações" value={[medicine.data.contraIndicacao]}/>
+						<MedicinesScreen title="Precauções" value={[medicine.data.precaucoes]}/>
+						<MedicinesScreen title="Reações" value={[medicine.data.reacoes]}/>
+						<MedicinesScreen title="Overdose" value={[medicine.data.overdose]}/>
+						<MedicinesScreen title="Laboratório" value={[medicine.data.laboratorio.empresa, medicine.data.laboratorio.cnpj, (medicine.data.laboratorio.endereco || medicine.data.laboratorio.endereço), medicine.data.laboratorio.sac]}/>
 					</ScrollView>
 				</>
 			)}
