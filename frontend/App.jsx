@@ -1,6 +1,6 @@
 import { StatusBar } from "react-native";
-import RoutesStack from "./src/components/Routes/Routes";
-import{NavigationContainer} from '@react-navigation/native';
+import StackNavigation from "./src/routes/StackNavigation";
+import { NavigationContainer } from '@react-navigation/native';
 import AuthContext from "./src/contexts/auth";
 import { auth } from "./src/config/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
@@ -21,7 +21,7 @@ export default function App() {
 					backgroundColor='#2d857e'
 					barStyle="light-content" 
 				/>
-				<RoutesStack/>
+				<StackNavigation/>
 			</AuthContext.Provider>
 		</NavigationContainer>
 	);

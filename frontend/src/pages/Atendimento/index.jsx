@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, SafeAreaView, View } from "react-native";
 import { useNavigation } from '@react-navigation/native'
 import * as Animatable from 'react-native-animatable'
-import { ToBar } from "../../components/ToBar/ToBar";
 import styles from "./styles";
 
 export default function Atendimento() {
@@ -76,9 +75,7 @@ export default function Atendimento() {
 					</Text>
 				</TouchableOpacity>
 			</View>
-		<ToBar/>
 		</SafeAreaView>
-
-    );
+ );
 
 }

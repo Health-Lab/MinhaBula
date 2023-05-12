@@ -1,12 +1,15 @@
 import { View,  Text, TouchableOpacity } from "react-native";
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import styles from "./styles";
+import AuthContext from "../../contexts/auth";
+import { useContext } from "react";
 
 export default function Welcome(){
 	const navigation = useNavigation();
+	const auth = useContext(AuthContext);
 	function handlePress(){
-		if(user){
+		if(auth.uid !== undefined){
 			navigation.navigate('Home')
 		} else{
 			navigation.navigate('SignIn')

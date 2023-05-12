@@ -3,7 +3,6 @@ import { TextInput, View, TouchableOpacity, ScrollView, Text, Pressable } from "
 import { Feather } from "@expo/vector-icons";
 import userService from "../../services/userService";
 import { useNavigation } from "@react-navigation/native";
-import { ToBar } from "../../components/ToBar/ToBar";
 import styles from "./styles";
 import AuthContext from "../../contexts/auth";
 
@@ -68,7 +67,6 @@ export default function Home(){
 					})}
 				</ScrollView>
 			)}
-			<ToBar/>
 		</View>
 	)
 }

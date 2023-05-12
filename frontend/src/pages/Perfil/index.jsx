@@ -1,5 +1,4 @@
 import { Text, View, Image } from 'react-native';
-import { ToBar } from '../../components/ToBar/ToBar';
 import styles from './styles';
 
 export default function UserProfileView()  {
@@ -57,7 +56,6 @@ export default function UserProfileView()  {
 					</View>
 				</View>
 			</View>
-			<ToBar/>
 		</View>
 	);
 }	

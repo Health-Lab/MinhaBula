@@ -1,5 +1,4 @@
 import { View, Text } from "react-native";
-import { ToBar } from "../../components/ToBar/ToBar";
 import styles from "./styles";
 
 export default function Favoritos(){
@@ -10,7 +9,6 @@ export default function Favoritos(){
 				Pagina Favoritos
 			</Text>
 		</View>
-		<ToBar/>
 	</View>
 	);
 }
