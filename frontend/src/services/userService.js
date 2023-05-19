@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, doc, updateDoc, set } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 
 const getMedicineByName = async({name}) => {
@@ -39,10 +39,18 @@ const getMedicinesNames = async() => {
 
 const includeFavoriteMedicine = async (userId, medicineId) => {
 	try {
-		const update = await collection(db, "users").doc(userId).set({
-			favoritos: [...medicineId, medicineId]
-		})
-		console.log(update);
+		const docRef = doc(db, "users", userId)
+		const user = await getDoc(docRef);
+		const userData = {
+			birthdayDate: user.data().birthdayDate,
+			contact: user.data().contact,
+			email: user.data().email,
+			name: user.data().name,
+			userType: user.data().userType,
+			favorites: user.data().favorites ? [...user.data().favorites, medicineId] : [medicineId]
+		}
+		const update = await setDoc(docRef, userData)
+		//console.log(update);
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;

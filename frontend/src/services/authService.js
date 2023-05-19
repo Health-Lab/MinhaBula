@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, collection, getDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebaseConfig";
 
 const singUp = async(data) => {
@@ -27,7 +27,7 @@ const singIn = async({email, password}) => {
 	try {
 		const res = await signInWithEmailAndPassword(auth, email, password);
 		const data = res.user.uid;
-		return data; 
+		return data;
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;

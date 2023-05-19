@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
 	},
 	textContent:{
 		fontSize: 20
+	},
+	tts: {
+		marginVertical: 12
 	}
 });
 

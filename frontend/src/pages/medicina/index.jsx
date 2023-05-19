@@ -1,16 +1,17 @@
 import { SafeAreaView, ScrollView, Text, View, Pressable } from "react-native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import userService from "../../services/userService";
 import { MedicinesScreen } from "../../components/MedicineScreen/MedicinesScreen";
 import styles from "./styles";
-import { AntDesign, Feather } from '@expo/vector-icons';
-import * as Speech from "expo-speech";
+import { AntDesign } from '@expo/vector-icons';
+import AuthContext from "../../contexts/auth";
 
 export default function Remedio({route}){
 	const [medicine, setMedicine] = useState();
 	const [favorite, setFavorite] = useState(false);
 	const { getMedicineByName, includeFavoriteMedicine } = userService;
 	const { nome } = route.params;
+	const auth = useContext(AuthContext);
 
 	useEffect(() => {
 		async function fecthData(){
@@ -18,22 +19,16 @@ export default function Remedio({route}){
 			setMedicine(res)
 		};
 		fecthData();
-		listAllVoices()
 	}, [])
 
-	const listAllVoices = async() => {
-		let voices = await Speech.getAvailableVoicesAsync(); 
-	}
-
 	const handleFavorite = () => {
-		favorite == true ? setFavorite(false) : setFavorite(true)
-	}
-
-	const handleTTS = () => {
-		const tts = "try hard";
-		Speech.speak(tts, {
-			language: "pt-BR"
-		});
+		if(favorite === false){
+			setFavorite(true)
+			//console.log(auth.uid, medicine.id);
+			includeFavoriteMedicine(auth.uid, medicine.id)
+		}else{
+			setFavorite(false)
+		}
 	}
 
 	return(
@@ -50,9 +45,6 @@ export default function Remedio({route}){
 							): (
 								<AntDesign name="hearto" size={28} color="#fc0000" />
 							)}
-						</Pressable>
-						<Pressable>
-							<Feather name="volume-2" size={28} color="black" onPress={handleTTS} />
 						</Pressable>
 					</View>
 					<ScrollView showsVerticalScrollIndicator={false}>
