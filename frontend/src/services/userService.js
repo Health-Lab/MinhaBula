@@ -41,16 +41,31 @@ const includeFavoriteMedicine = async (userId, medicineId) => {
 	try {
 		const docRef = doc(db, "users", userId)
 		const user = await getDoc(docRef);
-		const userData = {
-			birthdayDate: user.data().birthdayDate,
-			contact: user.data().contact,
-			email: user.data().email,
-			name: user.data().name,
-			userType: user.data().userType,
-			favorites: user.data().favorites ? [...user.data().favorites, medicineId] : [medicineId]
-		}
-		const update = await setDoc(docRef, userData)
+		const favorites = user.data().favorites ? [...user.data().favorites, medicineId] : [medicineId];
+		const update = await setDoc(docRef, {favorites: favorites}, {merge: true})
 		//console.log(update);
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		console.log(errorCode, errorMessage);
+	}
+};
+
+const removeMedicineFromFavorites = async(userId, medicineId) => {
+	try {
+		const docRef = doc(db, "users", userId)
+		const userData = await getDoc(docRef)
+		let newFavorites;
+		if(userData.data().favorites.includes(medicineId)){
+			console.log(userData.data().favorites);
+			newFavorites = userData.data().favorites.filter(id => {
+				return id !== medicineId ? userData.data().favorites.splice(userData.data().favorites.indexOf(medicineId), 1) : undefined;
+			})
+		}
+		const update = await setDoc(docRef, {
+			favorites: newFavorites
+		}, { merge: true })
+		console.log(update);
 	} catch (error) {
 		const errorCode = error.code;
 		const errorMessage = error.message;
@@ -61,7 +76,8 @@ const includeFavoriteMedicine = async (userId, medicineId) => {
 const userService = {
 	getMedicineByName,
 	getMedicinesNames,
-	includeFavoriteMedicine
+	includeFavoriteMedicine,
+	removeMedicineFromFavorites
 };
 
 export default userService;

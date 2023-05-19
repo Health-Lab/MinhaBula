@@ -50,7 +50,7 @@ export default function CadastreSe(){
 			userType: userType
 		};
 		const res = await singUp(newUser);
-		console.log(res);
+		navigation.navigate("Home")
 	};
 
 

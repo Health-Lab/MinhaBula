@@ -9,7 +9,7 @@ import AuthContext from "../../contexts/auth";
 export default function Remedio({route}){
 	const [medicine, setMedicine] = useState();
 	const [favorite, setFavorite] = useState(false);
-	const { getMedicineByName, includeFavoriteMedicine } = userService;
+	const { getMedicineByName, includeFavoriteMedicine, removeMedicineFromFavorites } = userService;
 	const { nome } = route.params;
 	const auth = useContext(AuthContext);
 
@@ -24,10 +24,10 @@ export default function Remedio({route}){
 	const handleFavorite = () => {
 		if(favorite === false){
 			setFavorite(true)
-			//console.log(auth.uid, medicine.id);
 			includeFavoriteMedicine(auth.uid, medicine.id)
 		}else{
 			setFavorite(false)
+			removeMedicineFromFavorites(auth.uid, medicine.id)
 		}
 	}
 

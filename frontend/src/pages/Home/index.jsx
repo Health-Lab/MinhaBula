@@ -51,6 +51,18 @@ export default function Home(){
 					<Feather name="search" size={30} color="#373737" />
 				</TouchableOpacity>
 			</View>
+			<View>
+				<Pressable>
+					<Text>
+						Pesquisas recentes
+					</Text>
+				</Pressable>
+				<Pressable>
+					<Text>
+						Adicionar medicina
+					</Text>
+				</Pressable>
+			</View>
 			{inputSearch && (
 				<ScrollView>
 					{medicines.filter(item => {
