@@ -105,13 +105,27 @@ const fetchFavoritesMedicines = async(favorites) => {
 	}
 };
 
+const getUser = async(uid) => {
+	try {
+		const busca = doc(db, "users", uid)
+		const res = await getDoc(busca);
+		const user = res.data()
+		return user
+	} catch (error) {
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		console.log(errorCode, errorMessage);
+	}
+}
+
 const userService = {
 	getMedicineByName,
 	getMedicinesNames,
 	includeFavoriteMedicine,
 	removeMedicineFromFavorites,
 	getFavorites,
-	fetchFavoritesMedicines
+	fetchFavoritesMedicines,
+	getUser
 };
 
 export default userService;

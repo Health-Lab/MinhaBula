@@ -3,6 +3,7 @@ import styles from "./styles";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../contexts/auth";
 import userService from "../../services/userService";
+import { FavoriteCard } from "../../components/FavoritesCard/FavoriteCard";
 
 export default function Favoritos(){
 	const auth = useContext(AuthContext);
@@ -11,7 +12,7 @@ export default function Favoritos(){
 
 	useEffect(() => {
 		fetchData(auth.favorites)
-	}, [fetchData])
+	}, [fetchData, auth.favorites])
 
 	const fetchData = async(favorites) => {
 		const res = await fetchFavoritesMedicines(favorites)
@@ -26,13 +27,11 @@ export default function Favoritos(){
 			</Text>
 		</View>
 		{favorites && (
-			<View>
+			<View style={styles.list}>
 				<FlatList
 					data={favorites}
 					renderItem={({item}) => (
-						<Text>
-							{item.nome}
-						</Text>
+						<FavoriteCard nome={item.nome} principioAtivo={item.principioAtivo} empresa={item.laboratorio.empresa}/>
 					)}
 					keyExtractor={item => item.nome}
 				/>

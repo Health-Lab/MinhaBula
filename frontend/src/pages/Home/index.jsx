@@ -10,6 +10,8 @@ import { Actions } from "../../components/Actions/Actions";
 export default function Home(){
 	const [inputSearch, setInputSearch] = useState("");
 	const [medicines, setMedicines] = useState();
+	const [hidden, setHidden] = useState(false);
+	const [focus, setFocus] = useState(false)
 	const { getMedicinesNames } = userService;
 	const navigation = useNavigation();
 	const auth = useContext(AuthContext);
@@ -24,10 +26,12 @@ export default function Home(){
 
 	function handleInputChange(value){
 		setInputSearch(value)
+		setHidden(false)
 	}
 
 	function handlePress(data){
 		setInputSearch(data)
+		setHidden(true)
 	}
 
 	useEffect(() => {
@@ -41,7 +45,8 @@ export default function Home(){
 	return (
 		<View style={styles.container}>
 			<View style={styles.SearchContainer}>
-				<TextInput style={styles.Input}
+				<TextInput style={focus ? styles.Input : styles.outFocus}
+					onFocus={() => setFocus(true)}
 					placeholder="Pesquisar"
 					placeholderTextColor="#FFFF"
 					onChangeText={handleInputChange}
@@ -51,9 +56,8 @@ export default function Home(){
 					<Feather name="search" size={30} color="#373737" />
 				</TouchableOpacity>
 			</View>
-			<Actions/>
 			{inputSearch && (
-				<ScrollView>
+				<ScrollView style={[styles.results, hidden ? styles.hidden : undefined]}>
 					{medicines.filter(item => {
 						const searchTerm = inputSearch.toLowerCase();
 						const countryName = item.toLowerCase();
@@ -62,12 +66,13 @@ export default function Home(){
 					.map(medicine => {
 						return (
 								<Pressable key={medicine} onPress={() => handlePress(medicine)}>
-									<Text> {medicine} </Text>
+									<Text style={styles.terms}>{medicine}</Text>
 								</Pressable>
 						)
 					})}
 				</ScrollView>
 			)}
+			<Actions/>
 		</View>
 	)
 }

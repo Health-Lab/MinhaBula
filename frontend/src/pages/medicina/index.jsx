@@ -17,6 +17,9 @@ export default function Remedio({route}){
 		async function fecthData(){
 			const res = await getMedicineByName({name: nome})
 			setMedicine(res)
+			if (auth.favorites.includes(res.id)){
+				setFavorite(true)
+			}
 		};
 		fecthData();
 	}, [])
@@ -25,9 +28,14 @@ export default function Remedio({route}){
 		if(favorite === false){
 			setFavorite(true)
 			includeFavoriteMedicine(auth.uid, medicine.id)
+			auth.favorites = [...auth.favorites, medicine.id]
 		}else{
 			setFavorite(false)
 			removeMedicineFromFavorites(auth.uid, medicine.id)
+			const newFavorites = auth.favorites.filter(uid => {
+			return uid !== medicine.id
+			})
+			auth.favorites = newFavorites
 		}
 	}
 

@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#373737',
 		width: '85%',
 		height: 50,
-		borderRadius:10,
+		borderTopLeftRadius: 8,
+		borderTopRightRadius: 8,
 		padding: 15,
 		fontSize: 18,
 		color: '#fff'
@@ -34,8 +35,33 @@ const styles = StyleSheet.create({
 		height: 50,
 		alignItems: 'center',
 		padding: 9,
-		marginBottom: 8,
 	}, 
+	results: {
+		backgroundColor: '#373737',
+		marginHorizontal: 9,
+		marginRight: 64,
+		borderBottomRightRadius: 8,
+		borderBottomLeftRadius: 8,
+	},
+	terms: {
+		color: "#fff",
+		borderBottomWidth: 2,
+		borderBottomColor: "#FFF",
+		marginVertical: 4,
+		paddingBottom: 4
+	},
+	hidden:{
+		display: "none"
+	},
+	outFocus: {
+		backgroundColor: '#373737',
+		width: '85%',
+		height: 50,
+		borderRadius: 8,
+		padding: 15,
+		fontSize: 18,
+		color: '#fff'
+	}
 })
 
 export default styles
