@@ -5,6 +5,7 @@ import userService from "../../services/userService";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 import AuthContext from "../../contexts/auth";
+import { Actions } from "../../components/Actions/Actions";
 
 export default function Home(){
 	const [inputSearch, setInputSearch] = useState("");
@@ -35,7 +36,6 @@ export default function Home(){
 			setMedicines(res);
 		}
 		fetchData();
-		console.log(auth);
 	}, [])
 
 	return (
@@ -51,18 +51,7 @@ export default function Home(){
 					<Feather name="search" size={30} color="#373737" />
 				</TouchableOpacity>
 			</View>
-			<View>
-				<Pressable>
-					<Text>
-						Pesquisas recentes
-					</Text>
-				</Pressable>
-				<Pressable>
-					<Text>
-						Adicionar medicina
-					</Text>
-				</Pressable>
-			</View>
+			<Actions/>
 			{inputSearch && (
 				<ScrollView>
 					{medicines.filter(item => {
