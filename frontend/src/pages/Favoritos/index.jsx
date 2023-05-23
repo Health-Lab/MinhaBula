@@ -4,18 +4,22 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../contexts/auth";
 import userService from "../../services/userService";
 import { FavoriteCard } from "../../components/FavoritesCard/FavoriteCard";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Favoritos(){
 	const auth = useContext(AuthContext);
+	const isFocused = useIsFocused(); 
 	const { fetchFavoritesMedicines } = userService;
 	const [favorites, setFavorites] = useState();
 
 	useEffect(() => {
-		fetchData(auth.favorites)
-	}, [fetchData, auth.favorites])
+		if (isFocused){
+			fetchData()
+		}
+	}, [auth, isFocused])
 
-	const fetchData = async(favorites) => {
-		const res = await fetchFavoritesMedicines(favorites)
+	async function fetchData(){
+		const res = await fetchFavoritesMedicines(auth.favorites)
 		setFavorites(res)
 	}
 
