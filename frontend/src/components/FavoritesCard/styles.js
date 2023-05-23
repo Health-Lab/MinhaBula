@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
 	},
 	subContainer:{
 		padding: 12
+	},
+	pressed: {
+		backgroundColor: "#d8d8d8"
 	}
 });
 

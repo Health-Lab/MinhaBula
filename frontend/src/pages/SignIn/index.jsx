@@ -26,7 +26,8 @@ export default function SignIn() {
 		const onSubmit = async(data) => {
 			const res = await singIn(data);
 			console.log("Usuário logado");
-			navigation.navigate('Home')
+			//colocar trava em caso de erro
+			navigation.navigate('Home');
 		};
 
 	return (

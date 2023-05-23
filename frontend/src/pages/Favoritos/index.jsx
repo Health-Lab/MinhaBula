@@ -1,6 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import styles from "./styles";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useLayoutEffect } from "react";
 import AuthContext from "../../contexts/auth";
 import userService from "../../services/userService";
 import { FavoriteCard } from "../../components/FavoritesCard/FavoriteCard";
@@ -12,7 +12,7 @@ export default function Favoritos(){
 	const { fetchFavoritesMedicines } = userService;
 	const [favorites, setFavorites] = useState();
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (isFocused){
 			fetchData()
 		}

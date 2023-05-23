@@ -9,6 +9,7 @@ export function FavoriteCard({nome, principioAtivo, empresa}){
 		navigation.navigate("Remedio", {nome: nome})
 	}
 
+
 	return(
 		<View style={styles.container}>
 			<Pressable onPress={handlePress} android_ripple={{color: "#fff"}}>
