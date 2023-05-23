@@ -10,7 +10,7 @@ export default function Welcome(){
 	const auth = useContext(AuthContext);
 	function handlePress(){
 		if(auth.uid !== undefined){
-			navigation.navigate('SignIn')
+			navigation.navigate('Home')
 		} else{
 			navigation.navigate('SignIn')
 		}
